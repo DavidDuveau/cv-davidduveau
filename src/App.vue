@@ -11,20 +11,33 @@ import { jsPDF } from 'jspdf';
 
 const personalInfo = ref({
   name: 'David Duveau',
-  title: 'Développeur Web Junior',
+  title: 'Développeur Logiciel C# .Net',
   location: '34000 Montpellier',
   phone: '07 69 49 51 72',
   email: 'david.duveau@hotmail.fr',
   github: 'https://github.com/DavidDuveau',
-  linkedin: 'www.linkedin.com/in/david-duveau/.fr',
-  profile: 'En reconversion dans les métiers du numérique, je suis à la recherche de mon premier emploi pour apporter ma touche au monde de demain'
+  linkedin: 'https://www.linkedin.com/in/david-duveau/',
+  profile: 'Après une reconversion réussie dans le domaine du numérique, j\'ai développé des compétences solides qui me permettent aujourd\'hui d\'apporter de la valeur dans des projets innovants.\r\n Issu d\'une formation scientifique, je me distingue par un esprit analytique et rigoureux, ainsi qu\'une grande capacité d\'apprentissage. Ces atouts m\'ont permis d\'acquérir des compétences techniques variées (BdD, OOP...) et de mener à bien des projets complexes dans un environnement en constante évolution.\r\n Animé par une curiosité constante et une soif d’apprendre, je suis à la recherche d’opportunités qui me permettront de contribuer à des projets ambitieux tout en continuant à enrichir mes compétences et à élargir mes perspectives professionnelles.'
 });
 
 const experience = ref([
   {
+    period: '2021',
+    company: 'Weda',
+    position: 'Développeur logiciel',
+    description: 'Migration de données sensibles secteur médical.\r\n Automatisation des process de migration de données - flow & data.\r\n Développement et maintient d\'un outils interne - ETL non commercial.\r\n Communication technique - opérateurs, commerciaux, clients.',
+    technologies: 'Fichiers plats - Microsoft SQL Server - .NET Framework - Bases de données orientées texte',
+  },
+  {
+    period: '2020 - 2021',
+    company: 'ADRAR',
+    position: 'Stagiaire developpeur',
+    technologies: 'Javascript',
+  },
+  {
     period: '2020 - 2021',
     company: 'Triotech',
-    position: 'Stage',
+    position: 'Stagiaire développeur Web',
     description: 'Développement d\'une solution web pour laboratoire de langue',
     technologies: 'JS - Vue - Insomnia - KDE',
   },
@@ -89,7 +102,7 @@ const generatePDF = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen max-w-full bg-gray-100">
     <div class="max-w-4xl mx-auto p-6">
       <Header :personal-info="personalInfo" />
       
