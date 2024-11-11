@@ -8,6 +8,8 @@ import Skills from './components/Skills.vue';
 import Education from './components/Education.vue';
 import Interests from './components/Interests.vue';
 import { jsPDF } from 'jspdf';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 const personalInfo = ref({
   name: 'David Duveau',
@@ -30,7 +32,7 @@ const experience = ref([
   },
   {
     period: '2020 - 2021',
-    company: 'ADRAR',
+    company: 'Adrar',
     position: 'Stagiaire developpeur',
     technologies: 'Javascript',
   },
@@ -56,14 +58,14 @@ const experience = ref([
 ]);
 
 const skills = ref([
-  { category: 'Technologies', items: ['JavaScript', 'TypeScript', 'Vue.js', 'React', 'Node.js', 'Java', 'Spring', 'SQL'] },
+  { category: 'Technologies', items: ['C#', '.NET Framework', 'SQL', 'JavaScript', 'TypeScript', 'Vue.js', 'Microsoft SQL Server', 'PosgreSQL'] },
   { category: 'Soft Skills', items: ['Esprit scientifique', 'Travail en équipe', 'Anglais'] }
 ]);
 
 const education = ref([
   {
     year: '2020',
-    school: 'ADRAR',
+    school: 'Adrar',
     diploma: 'Formation Développement Web',
     details: 'JS - React - Node - HTML/CSS - SQL - Wordpress'
   },
@@ -81,24 +83,73 @@ const education = ref([
   }
 ]);
 
-const interests = ref(['Escalade (bloc)', 'Voyage', 'Brassage', 'Randonnée']);
+const interests = ref(['Escalade','Voyage','Brassage','Randonnée']);
 
 const generatePDF = () => {
   const doc = new jsPDF();
-  
+
   // Configuration du PDF
   doc.setFont('helvetica');
   doc.setFontSize(24);
   doc.text(personalInfo.value.name, 20, 20);
-  
-  // Ajout des sections
   doc.setFontSize(16);
-  doc.text('Expérience', 20, 40);
+  doc.text(personalInfo.value.title, 20, 30);
+  doc.text(personalInfo.value.location, 20, 40);
+  doc.text(personalInfo.value.phone, 20, 50);
+  doc.text(personalInfo.value.email, 20, 60);
+  doc.text(personalInfo.value.github, 20, 70);
+  doc.text(personalInfo.value.linkedin, 20, 80);
   
-  // ... Ajout du contenu des différentes sections
-  
+  // Ajouter la section "Profil"
+  doc.setFontSize(18);
+  doc.text('Profil', 20, 100);
+  doc.setFontSize(12);
+  doc.text(personalInfo.value.profile, 20, 110);
+
+  // Ajouter la section "Expérience"
+  doc.setFontSize(18);
+  doc.text('Expérience', 20, 140);
+  doc.setFontSize(12);
+  experience.value.forEach((exp, index) => {
+    doc.text(`${exp.period} - ${exp.position} chez ${exp.company}`, 20, 150 + (index * 10));
+    if (exp.description) {
+      doc.text(exp.description, 20, 160 + (index * 10));
+    }
+    doc.text(`Technologies: ${exp.technologies}`, 20, 170 + (index * 10));
+  });
+
+  // Ajouter la section "Compétences"
+  doc.setFontSize(18);
+  doc.text('Compétences', 20, 200);
+  doc.setFontSize(12);
+  skills.value.forEach((skillCategory, index) => {
+    doc.text(skillCategory.category, 20, 210 + (index * 10));
+    skillCategory.items.forEach((item, itemIndex) => {
+      doc.text(item, 20, 220 + (index * 10) + (itemIndex * 10));
+    });
+  });
+
+  // Ajouter la section "Formation"
+  doc.setFontSize(18);
+  doc.text('Formation', 20, 250);
+  doc.setFontSize(12);
+  education.value.forEach((edu, index) => {
+    doc.text(`${edu.year} - ${edu.diploma} (${edu.school})`, 20, 260 + (index * 10));
+    doc.text(edu.details, 20, 270 + (index * 10));
+  });
+
+  // Ajouter la section "Intérêts"
+  doc.setFontSize(18);
+  doc.text('Intérêts', 20, 300);
+  doc.setFontSize(12);
+  interests.value.forEach((interest, index) => {
+    doc.text(`${interest.icon} ${interest.title}`, 20, 310 + (index * 10));
+  });
+
+  // Enregistrer le PDF
   doc.save('CV-David-Duveau.pdf');
 };
+
 </script>
 
 <template>
@@ -115,7 +166,7 @@ const generatePDF = () => {
         
         <button
           @click="generatePDF"
-          class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors"
         >
           Télécharger CV (PDF)
         </button>

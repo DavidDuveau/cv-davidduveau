@@ -56,7 +56,7 @@ onMounted(() => {
       <h2 class="text-2xl font-bold text-gray-900">Articles Tech</h2>
       <button 
     @click="refreshArticles"
-    class="text-blue-600 hover:text-blue-800 flex items-center gap-2"
+    class="text-green-600 hover:text-green-800 flex items-center gap-2"
     :disabled="loading"
   >
     <RefreshCw :class="{ 'animate-spin': loading }" size="20" />
@@ -72,7 +72,7 @@ onMounted(() => {
     :class="[
       'px-4 py-2 rounded-full text-sm font-medium transition-colors',
       selectedTech === tech.id
-        ? 'bg-blue-600 text-white'
+        ? 'bg-green-600 text-white'
         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
     ]"
   >
@@ -88,7 +88,7 @@ onMounted(() => {
   <article
     v-for="article in filteredArticles"
     :key="article.id"
-    class="border-l-4 border-blue-600 pl-4 hover:bg-gray-50 transition-colors"
+    class="border-l-4 border-green-600 pl-4 hover:bg-gray-50 transition-colors"
   >
     <div class="flex justify-between items-start">
       <h3 class="font-semibold text-lg text-gray-900">
@@ -99,7 +99,7 @@ onMounted(() => {
           'text-xs px-2 py-1 rounded-full',
           {
             'bg-yellow-100 text-yellow-800': article.technology === 'javascript',
-            'bg-blue-100 text-blue-800': article.technology === 'typescript',
+            'bg-green-100 text-green-800': article.technology === 'typescript',
             'bg-purple-100 text-purple-800': article.technology === 'csharp'
           }
         ]"
@@ -118,7 +118,7 @@ onMounted(() => {
       <a 
         :href="article.url"
         target="_blank"
-        class="flex items-center gap-2 text-blue-600 hover:text-blue-800"
+        class="flex items-center gap-2 text-green-600 hover:text-green-800"
       >
         <BookOpen size="16" />
         Lire l'article

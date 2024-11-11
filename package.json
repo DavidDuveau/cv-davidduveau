@@ -14,6 +14,7 @@
     "deploy": "vite build && git add docs && git commit -m 'deploy' && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.6.0",
     "jspdf": "^2.5.2",
     "pinia": "^2.2.6",
     "vue": "^3.5.12",
