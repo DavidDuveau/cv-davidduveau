@@ -164,12 +164,12 @@ const generatePDF = () => {
         <Education :education="education" />
         <Interests :interests="interests" />
         
-        <button
+        <!-- <button
           @click="generatePDF"
           class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors"
         >
           Télécharger CV (PDF)
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
