@@ -1,6 +1,7 @@
 {
   "name": "cv-webapp",
   "version": "0.0.0",
+  "homepage": "https://davidduveau.github.io/cv-davidduveau/",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,7 +10,8 @@
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force"
+    "type-check": "vue-tsc --build --force",
+    "deploy": "vite build && git add dist && git commit -m 'deploy' && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
     "jspdf": "^2.5.2",
@@ -22,11 +24,13 @@
     "@tsconfig/node22": "^22.0.0",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^22.9.0",
+    "@types/vue": "^2.0.0",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
     "autoprefixer": "^10.4.20",
+    "gh-pages": "^6.2.0",
     "jsdom": "^25.0.1",
     "npm-run-all2": "^7.0.1",
     "postcss": "^8.4.48",
