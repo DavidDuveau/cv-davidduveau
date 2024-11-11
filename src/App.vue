@@ -102,8 +102,8 @@ const generatePDF = () => {
 </script>
 
 <template>
-  <div class="min-h-screen max-w-full bg-gray-100">
-    <div class="max-w-4xl mx-auto p-6">
+  <div class="min-h-screen bg-gray-100">
+    <div class="w-full mx-auto p-6">
       <Header :personal-info="personalInfo" />
       
       <div class="grid gap-6 mt-6">
