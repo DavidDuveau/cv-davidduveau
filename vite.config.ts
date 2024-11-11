@@ -12,9 +12,13 @@ export default defineConfig({
     vueJsx(),
     vueDevTools(),
   ],
+  base: '/cv-davidduveau/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
+  },
+  build: {
+    outDir: 'docs', // Générer le build dans le dossier "docs"
   },
 })
