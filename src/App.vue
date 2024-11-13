@@ -7,9 +7,25 @@ import Experience from './components/Experience.vue';
 import Skills from './components/Skills.vue';
 import Education from './components/Education.vue';
 import Interests from './components/Interests.vue';
-import { jsPDF } from 'jspdf';
+import Login from './components/Login.vue';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
+const isLoggedIn = ref(false);
+const currentUser = ref(null);
+
+const handleLogin = ({ username, password }) => {
+  // Ici vous pouvez ajouter la logique de validation du mot de passe
+  // Par exemple, vérifier avec une API ou des credentials stockés
+  
+  // Pour cet exemple, on simule une validation simple
+  if (password === 'davduv+0204') {
+    isLoggedIn.value = true;
+    currentUser.value = username;
+  } else {
+    // Vous pouvez gérer l'erreur comme vous le souhaitez
+    console.error('Mot de passe incorrect');
+  }
+};
 
 const personalInfo = ref({
   name: 'David Duveau',
@@ -90,15 +106,18 @@ const interests = ref(['Escalade','Voyage','Brassage','Randonnée']);
 <template>
   <div class="min-h-screen bg-gray-100">
     <div class="w-full mx-auto p-6">
-      <Header :personal-info="personalInfo" />
+      <Login v-if="!isLoggedIn" @login="handleLogin" />
       
-      <div class="grid gap-6 mt-6">
-        <Profile :description="personalInfo.profile" />
-        <Experience :experiences="experience" />
-        <Skills :skills="skills" />
-        <Education :education="education" />
-        <Interests :interests="interests" />
-      </div>
+      <template v-else>
+        <Header :personal-info="personalInfo" />
+        <div class="grid gap-6 mt-6">
+          <Profile :description="personalInfo.profile" />
+          <Experience :experiences="experience" />
+          <Skills :skills="skills" />
+          <Education :education="education" />
+          <Interests :interests="interests" />
+        </div>
+      </template>
     </div>
   </div>
 </template>
