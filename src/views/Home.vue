@@ -1,0 +1,95 @@
+<!-- src/views/Home.vue -->
+<script setup>
+import { ref } from 'vue';
+import Header from '../components/Header.vue';
+import Profile from '../components/Profile.vue';
+import Experience from '../components/Experience.vue';
+import Skills from '../components/Skills.vue';
+import Education from '../components/Education.vue';
+import Interests from '../components/Interests.vue';
+
+const personalInfo = ref({
+  name: 'David Duveau',
+  title: 'Développeur Logiciel C# .Net',
+  location: '34000 Montpellier',
+  phone: '07 69 49 51 72',
+  email: 'david.duveau@hotmail.fr',
+  github: 'https://github.com/DavidDuveau',
+  linkedin: 'https://www.linkedin.com/in/david-duveau/',
+  profile: 'Après une reconversion réussie dans le domaine du numérique, j\'ai développé des compétences solides qui me permettent aujourd\'hui d\'apporter de la valeur dans des projets innovants.\r\n Issu d\'une formation scientifique, je me distingue par un esprit analytique et rigoureux, ainsi qu\'une grande capacité d\'apprentissage. Ces atouts m\'ont permis d\'acquérir des compétences techniques variées (BdD, OOP...) et de mener à bien des projets complexes dans un environnement en constante évolution.\r\n Animé par une curiosité constante et une soif d\'apprendre, je suis à la recherche d\'opportunités qui me permettront de contribuer à des projets ambitieux tout en continuant à enrichir mes compétences et à élargir mes perspectives professionnelles.'
+});
+
+const experience = ref([
+  {
+    period: '2021',
+    company: 'Weda',
+    position: 'Développeur logiciel',
+    description: 'Migration de données sensibles secteur médical.\r\n Automatisation des process de migration de données - flow & data.\r\n Développement et maintient d\'un outils interne - ETL non commercial.\r\n Communication technique - opérateurs, commerciaux, clients.',
+    technologies: 'Fichiers plats - Microsoft SQL Server - .NET Framework - Bases de données orientées texte',
+  },
+  {
+    period: '2020 - 2021',
+    company: 'Adrar',
+    position: 'Stagiaire developpeur',
+    technologies: 'Javascript',
+  },
+  {
+    period: '2020 - 2021',
+    company: 'Triotech',
+    position: 'Stagiaire développeur Web',
+    description: 'Développement d\'une solution web pour laboratoire de langue',
+    technologies: 'JS - Vue - Insomnia - KDE',
+  },
+  {
+    period: '2018 - 2019',
+    company: 'Research To Business',
+    position: 'Prestataire',
+    description: 'Rédaction scientifique de dossiers CIR'
+  },
+  {
+    period: '2016 - 2017',
+    company: 'Université François Rabelais',
+    position: 'Ingénieur de recherche',
+    description: 'Recherche et développement sur la synthèse de matériaux poreux, Rédaction de rapports, présentation de résultats'
+  }
+]);
+
+const skills = ref([
+  { category: 'Technologies', items: ['C#', '.NET Framework', 'SQL', 'JavaScript', 'TypeScript', 'Vue.js', 'Microsoft SQL Server', 'PosgreSQL'] },
+  { category: 'Soft Skills', items: ['Esprit scientifique', 'Travail en équipe', 'Anglais'] }
+]);
+
+const education = ref([
+  {
+    year: '2020',
+    school: 'Adrar',
+    diploma: 'Formation Développement Web',
+    details: 'JS - React - Node - HTML/CSS - SQL - Wordpress'
+  },
+  {
+    year: '2019',
+    school: 'Diginamic',
+    diploma: 'Formation Développement',
+    details: 'Java - Spring - Hibernate - JS - TS - Angular - SQL'
+  },
+  {
+    year: '2012 - 2015',
+    school: 'Université Montpellier',
+    diploma: 'Thèse de doctorat - Chimie des matériaux',
+    details: 'Développement de batteries Li-ion à base de silicium'
+  }
+]);
+
+const interests = ref(['Escalade', 'Voyage', 'Brassage', 'Randonnée']);
+</script>
+
+<template>
+  <div class="grid gap-6">
+    <Header :personal-info="personalInfo" />
+    <Profile :description="personalInfo.profile" />
+    <Experience :experiences="experience" />
+    <Skills :skills="skills" />
+    <Education :education="education" />
+    <Interests :interests="interests" />
+  </div>
+</template>

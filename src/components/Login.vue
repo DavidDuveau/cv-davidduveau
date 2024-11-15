@@ -30,7 +30,7 @@ const handleSubmit = async () => {
     const success = await authStore.login(username.value, password.value);
     
     if (success) {
-      router.push('/'); // Rediriger vers la page d'accueil après connexion
+      router.push('/'); // Retour à la page d'accueil après connexion
     } else {
       error.value = authStore.error;
     }
@@ -41,6 +41,10 @@ const handleSubmit = async () => {
   }
 };
 
+const handleCancel = () => {
+  router.push('/');
+};
+
 const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value;
 };
@@ -49,7 +53,15 @@ const togglePasswordVisibility = () => {
 <template>
   <div class="min-h-screen bg-gray-100 flex items-center justify-center">
     <section class="bg-white rounded-xl shadow-xl p-8 w-full max-w-md mx-4">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">Connexion</h2>
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-900">Connexion</h2>
+        <button 
+          @click="handleCancel"
+          class="text-gray-500 hover:text-gray-700"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
       
       <form @submit.prevent="handleSubmit" class="space-y-6">
         <div>
@@ -99,14 +111,24 @@ const togglePasswordVisibility = () => {
           {{ error }}
         </div>
 
-        <button
-          type="submit"
-          :disabled="loading"
-          class="w-full bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <span v-if="loading">Connexion en cours...</span>
-          <span v-else>Se connecter</span>
-        </button>
+        <div class="flex gap-4">
+          <button
+            type="submit"
+            :disabled="loading"
+            class="flex-1 bg-green-500 text-white py-3 px-4 rounded-lg hover:bg-green-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span v-if="loading">Connexion en cours...</span>
+            <span v-else>Se connecter</span>
+          </button>
+          
+          <button
+            type="button"
+            @click="handleCancel"
+            class="flex-1 bg-gray-200 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+          >
+            Annuler
+          </button>
+        </div>
       </form>
     </section>
   </div>
