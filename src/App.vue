@@ -4,11 +4,11 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="bg-gray-100 min-h-screen">
     <Navbar />
-    <div class="pt-16 container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <main class="pt-16 px-4 sm:px-6 lg:px-8">
       <router-view />
-    </div>
+    </main>
   </div>
 </template>
 
