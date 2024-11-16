@@ -1,9 +1,8 @@
-// src/router/index.ts
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import Login from '@/components/Login.vue'
 import Home from '@/views/Home.vue'
-import Materials from '@/components/Materials.vue'
+import MaterialsExplorer from '@/components/MaterialsExplorer.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -19,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/materials',
     name: 'Materials',
-    component: Materials
+    component: MaterialsExplorer
   }
 ]
 

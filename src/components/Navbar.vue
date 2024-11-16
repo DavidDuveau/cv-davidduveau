@@ -1,4 +1,3 @@
-<!-- src/components/Navbar.vue -->
 <script setup>
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
@@ -29,9 +28,10 @@ const handleLogin = () => {
           </router-link>
           <router-link 
             to="/materials" 
-            class="text-gray-600 hover:text-green-600"
+            class="text-gray-600 hover:text-green-600 flex items-center space-x-2"
           >
-            Matériaux
+            <i class="fas fa-database"></i>
+            <span>Materials</span>
           </router-link>
         </div>
         

@@ -3,14 +3,17 @@ import cors from "cors";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import * as dotenv from "dotenv";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import { dirname, join } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const envPath = join(__dirname, "..", ".env");
 
-dotenv.config();
+dotenv.config({ path: envPath });
 
-if (!process.env.VITE_MATERIALS_API_KEY) {
+const API_KEY = process.env.VITE_MATERIALS_API_KEY;
+
+if (!API_KEY) {
   console.error(
     "❌ Erreur: La clé API VITE_MATERIALS_API_KEY n'est pas définie dans le fichier .env"
   );
@@ -18,67 +21,68 @@ if (!process.env.VITE_MATERIALS_API_KEY) {
 }
 
 const app = express();
-
-// Configuration CORS
 app.use(cors());
-
-// Middleware de logging
-app.use((req, res, next) => {
-  const timestamp = new Date().toISOString();
-  console.log(`📥 ${timestamp} - ${req.method} ${req.url}`);
-  console.log("Query params:", req.query);
-  next();
-});
 
 // Configuration du proxy
 const materialsProjectProxy = createProxyMiddleware({
-  target: "https://api.materialsproject.org/v2",
+  target: "https://api.materialsproject.org",
   changeOrigin: true,
+  secure: true,
   pathRewrite: {
     "^/api/materials": "",
   },
-  onProxyReq: (proxyReq, req) => {
-    // Ajout de la clé API
-    proxyReq.setHeader("X-API-KEY", process.env.VITE_MATERIALS_API_KEY);
-    proxyReq.setHeader("Accept", "application/json");
+  onProxyReq: (proxyReq, req, res) => {
+    // Ajouter la clé API
+    proxyReq.setHeader("X-API-KEY", API_KEY);
 
-    console.log("📤 Requête sortante:", {
+    // Log de la requête pour debug
+    console.log("Requête sortante:", {
       method: proxyReq.method,
       path: proxyReq.path,
       headers: {
         ...proxyReq.getHeaders(),
-        "X-API-KEY": "***",
+        "X-API-KEY": "[HIDDEN]",
       },
     });
   },
   onProxyRes: (proxyRes, req, res) => {
-    console.log("📨 Réponse reçue:", {
-      statusCode: proxyRes.statusCode,
-      statusMessage: proxyRes.statusMessage,
-    });
-  },
-  onError: (err, req, res) => {
-    console.error("❌ Erreur proxy:", err);
-    res.status(500).json({
-      error: true,
-      message: "Erreur lors de la connexion à l'API Materials Project",
-      details: err.message,
+    // Log de la réponse
+    let body = "";
+    proxyRes.on("data", (chunk) => (body += chunk));
+    proxyRes.on("end", () => {
+      try {
+        const parsedBody = JSON.parse(body);
+        console.log("Réponse reçue:", {
+          status: proxyRes.statusCode,
+          headers: proxyRes.headers,
+          body: parsedBody,
+        });
+      } catch (e) {
+        console.log("Réponse reçue (non-JSON):", {
+          status: proxyRes.statusCode,
+          headers: proxyRes.headers,
+          body,
+        });
+      }
     });
   },
 });
 
-// Application du proxy
 app.use("/api/materials", materialsProjectProxy);
 
-// Démarrage du serveur
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`
 🚀 Serveur proxy démarré:
    - URL: http://localhost:${PORT}
-   - Env: ${process.env.NODE_ENV}
-   - Clé API: ${
-     process.env.VITE_MATERIALS_API_KEY ? "✓ configurée" : "✗ manquante"
-   }
+   - Clé API: ${API_KEY ? "✓ configurée" : "✗ manquante"}
+   - Chemin .env: ${envPath}
   `);
+
+  // Test immédiat de la configuration
+  console.log("Test de la configuration:", {
+    nodeEnv: process.env.NODE_ENV,
+    apiKeyPresent: !!API_KEY,
+    apiKeyLength: API_KEY?.length,
+  });
 });
