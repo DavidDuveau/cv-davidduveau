@@ -10,7 +10,7 @@ export const useResumeStore = defineStore('resume', () => {
     email: 'david.duveau@hotmail.fr',
     github: 'https://github.com/DavidDuveau',
     linkedin: 'https://www.linkedin.com/in/david-duveau/',
-    profile: 'Après une reconversion réussie dans le domaine du numérique...'
+    profile: 'Après une reconversion réussie dans le numérique, j\'ai développé de solides compétences qui me permettent d\'apporter une réelle valeur ajoutée dans des projets innovants. Grâce à ma formation scientifique, je suis rigoureux, analytique et j\'apprends vite. Cela m\'a permis d\'acquérir diverses compétences techniques (BdD, OOP...) et de gérer avec succès des projets complexes dans un environnement en constante évolution. Curieux et passionné, je cherche de nouvelles opportunités pour contribuer à des projets stimulants, tout en continuant à développer mes compétences et à élargir mon horizon professionnel.'
   })
 
   const experience = ref([
