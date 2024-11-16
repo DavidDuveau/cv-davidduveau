@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref } from 'vue'
 import { materialsService } from '../services'
 import type { Material } from '../services'
@@ -192,4 +192,4 @@ const formatNumber = (value: number | undefined, precision: number = 2): string 
       </div>
     </div>
   </div>
-</template>
+</template> -->
