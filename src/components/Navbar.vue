@@ -1,34 +1,38 @@
 <!-- src/components/Navbar.vue -->
 <script setup>
-import { useAuthStore } from '../stores/authStore';
-import { useRouter } from 'vue-router';
-import { computed } from 'vue';
+import { useAuthStore } from '../stores/authStore'
+import { useRouter } from 'vue-router'
+import { computed } from 'vue'
 
-const authStore = useAuthStore();
-const router = useRouter();
+const authStore = useAuthStore()
+const router = useRouter()
 
-const isAuthenticated = computed(() => authStore.isAuthenticated);
+const isAuthenticated = computed(() => authStore.isAuthenticated)
 
 const handleLogout = () => {
-  authStore.logout();
-  router.push('/');
-};
+  authStore.logout()
+  router.push('/')
+}
 
 const handleLogin = () => {
-  router.push('/login');
-};
+  router.push('/login')
+}
 </script>
 
 <template>
   <nav class="fixed top-0 left-0 right-0 bg-white shadow-lg z-50">
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between h-16">
-        <div class="flex">
-          <div class="flex-shrink-0 flex items-center">
-            <router-link to="/" class="text-xl font-bold text-green-600">
-              CV David Duveau
-            </router-link>
-          </div>
+        <div class="flex items-center space-x-8">
+          <router-link to="/" class="text-xl font-bold text-green-600">
+            CV David Duveau
+          </router-link>
+          <router-link 
+            to="/materials" 
+            class="text-gray-600 hover:text-green-600"
+          >
+            Matériaux
+          </router-link>
         </div>
         
         <div class="flex items-center">

@@ -1,24 +1,30 @@
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import vueDevTools from 'vite-plugin-vue-devtools'
+import { VitePWA } from 'vite-plugin-pwa'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    vueJsx(),
-    vueDevTools(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico'],
+      manifest: {
+        name: 'CV David Duveau',
+        short_name: 'CV',
+        icons: [
+          {
+            src: '/favicon.ico',
+            sizes: '64x64',
+            type: 'image/x-icon'
+          }
+        ]
+      }
+    })
   ],
-  base: '/cv-davidduveau/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
-    },
-  },
-  build: {
-    outDir: 'docs', // Générer le build dans le dossier "docs"
-  },
+    }
+  }
 })
