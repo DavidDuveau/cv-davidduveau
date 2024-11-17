@@ -14,7 +14,7 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "predeploy": "npm run build",
-    "deploy": "npm run build && cp dist/index.html dist/404.html && gh-pages -d dist",
+    "deploy": "node scripts/deploy.js",
     "test:unit": "vitest --environment jsdom --config vitest.config.ts --root src/"
   },
   "dependencies": {
@@ -40,6 +40,7 @@
     "autoprefixer": "^10.4.20",
     "concurrently": "^9.1.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "gh-pages": "^6.2.0",
