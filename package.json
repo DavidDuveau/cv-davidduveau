@@ -14,7 +14,7 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "npm run build && cp dist/index.html dist/404.html && gh-pages -d dist",
     "test:unit": "vitest --environment jsdom --config vitest.config.ts --root src/"
   },
   "dependencies": {

@@ -19,11 +19,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/materials',
     name: 'Materials',
     component: MaterialsExplorer
+  },
+  // Ajout d'une route catch-all pour la gestion 404
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/'
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL || '/cv-davidduveau/'),
   routes
 })
 
