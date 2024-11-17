@@ -19,17 +19,22 @@ const routes: Array<RouteRecordRaw> = [
     path: '/materials',
     name: 'Materials',
     component: MaterialsExplorer
-  },
-  // Ajout d'une route catch-all pour la gestion 404
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: '/'
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL || '/cv-davidduveau/'),
   routes
+})
+
+// Navigation guard pour gérer les redirections
+router.beforeEach((to, from, next) => {
+  // Si la route n'existe pas, rediriger vers la home
+  if (!to.matched.length) {
+    next({ name: 'Home' })
+  } else {
+    next()
+  }
 })
 
 export default router

@@ -7,17 +7,16 @@
     <title>CV David Duveau</title>
     <script>
       (function () {
-        const prefersDark =
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (prefersDark) {
-          document.documentElement.classList.add("dark");
+        const path = window.location.pathname;
+        const base = "/cv-davidduveau/";
+        if (path !== base && !path.startsWith(base)) {
+          window.location.href = base;
         }
       })();
     </script>
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="./src/main.ts"></script>
   </body>
 </html>
