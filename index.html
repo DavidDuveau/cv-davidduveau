@@ -7,18 +7,17 @@
     <title>CV David Duveau</title>
     <script>
       (function () {
-        const prefersDark =
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (prefersDark) {
-          document.documentElement.classList.add("dark");
+        const path = window.location.pathname;
+        const base = "/cv-davidduveau/";
+        if (path !== base && !path.startsWith(base)) {
+          window.location.href = base;
         }
       })();
     </script>
-    <script type="module" crossorigin src="/cv-davidduveau/assets/index-9CUzwQ4f.js"></script>
-    <link rel="stylesheet" crossorigin href="/cv-davidduveau/assets/index-BULlJY7s.css">
+    <script type="module" crossorigin src="/cv-davidduveau/assets/index-JGQpciKl.js"></script>
+    <link rel="stylesheet" crossorigin href="/cv-davidduveau/assets/index-CAawrLBG.css">
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app"></div>
   </body>
 </html>
