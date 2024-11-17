@@ -2,7 +2,6 @@
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
-import { Anvil } from 'lucide-vue-next';
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -24,15 +23,19 @@ const handleLogin = () => {
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between h-16">
         <div class="flex items-center space-x-8">
-          <router-link to="/" class="text-xl font-bold text-green-600">
+          <RouterLink 
+            :to="{ name: 'Home' }" 
+            class="text-xl font-bold text-green-600 hover:text-green-700"
+          >
             CV David Duveau
-          </router-link>
-          <router-link 
-            to="/materials" 
+          </RouterLink>
+          <RouterLink 
+            :to="{ name: 'Materials' }" 
             class="text-gray-600 hover:text-green-600 flex items-center space-x-2"
           >
-            <span>Materials</span>
-          </router-link>
+            <Database class="w-5 h-5" />
+            <span>Materials Explorer</span>
+          </RouterLink>
         </div>
         
         <div class="flex items-center">

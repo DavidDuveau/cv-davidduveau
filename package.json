@@ -11,10 +11,11 @@
     "dev:all": "concurrently \"npm run dev:server\" \"npm run dev\"",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
-    "test:unit": "vitest --environment jsdom --config vitest.config.ts --root src/",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force",
-    "deploy": "vite build && git add docs && git commit -m 'deploy' && git subtree push --prefix dist origin gh-pages"
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "test:unit": "vitest --environment jsdom --config vitest.config.ts --root src/"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.6.0",

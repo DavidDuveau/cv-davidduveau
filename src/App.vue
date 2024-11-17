@@ -1,5 +1,9 @@
 <script setup>
+import { RouterView, RouterLink } from 'vue-router';
 import Navbar from './components/Navbar.vue';
+import { Database } from 'lucide-vue-next';
+
+// Si vous utilisez des styles spécifiques de Font Awesome
 import '@fortawesome/fontawesome-free/css/all.min.css';
 </script>
 
@@ -7,7 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
   <div class="bg-gray-100 min-h-screen">
     <Navbar />
     <main class="pt-16 px-4 sm:px-6 lg:px-8">
-      <router-view />
+      <RouterView />
     </main>
   </div>
 </template>
