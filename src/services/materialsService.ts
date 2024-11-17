@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 
 export interface Material {
@@ -36,8 +36,7 @@ class MaterialsService {
     this.api = axios.create({
       baseURL: 'http://localhost:3000/api/materials',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Accept': 'application/json'
       }
     })
   }
@@ -48,42 +47,37 @@ class MaterialsService {
         throw new Error('Au moins un élément est requis');
       }
 
-      // Encodage correct des paramètres
-      const elementsString = encodeURIComponent(
-        elements
-          .map(e => e.trim())
+      const params = {
+        elements: elements
+          .map(e => e.trim()) // Garde les majuscules
           .filter(e => e)
-          .join(',')
-      );
+          .join(','),
+        deprecated: 'false',
+        _per_page: '100',
+        _skip: '0',
+        _limit: '100',
+        _all_fields: 'false',
+        license: 'BY-C'
+      };
 
-      console.log('Recherche des éléments (encodés):', elementsString);
-
-      const response = await this.api.get('/materials/core/', {
-        params: {
-          elements: elements    // axios encodera automatiquement les paramètres
-            .map(e => e.trim().toLowerCase())
-            .filter(e => e)
-            .join(','),
-          deprecated: 'false'
-        }
-      });
-
-      console.log('Réponse reçue:', response.data);
+      const response = await this.api.get('/materials/core/', { params });
 
       return {
         data: response.data?.data || [],
         meta: response.data?.meta || { total: 0 }
       };
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error('Détails de l\'erreur:', {
-          status: error.response?.status,
-          data: error.response?.data,
-          headers: error.response?.headers,
-          url: error.config?.url,
-          params: error.config?.params
-        });
-      }
+      console.error('Erreur de recherche:', error);
+      throw error;
+    }
+  }
+
+  async getMaterialById(materialId: string): Promise<Material> {
+    try {
+      const response = await this.api.get(`/materials/core/${materialId}`);
+      return response.data.data;
+    } catch (error) {
+      console.error('Erreur lors de la récupération du matériau:', error);
       throw error;
     }
   }

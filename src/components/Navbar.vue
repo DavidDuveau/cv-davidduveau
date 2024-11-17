@@ -2,6 +2,7 @@
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
+import { Anvil } from 'lucide-vue-next';
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -30,7 +31,6 @@ const handleLogin = () => {
             to="/materials" 
             class="text-gray-600 hover:text-green-600 flex items-center space-x-2"
           >
-            <i class="fas fa-database"></i>
             <span>Materials</span>
           </router-link>
         </div>

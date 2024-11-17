@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { materialsService } from '../services';
+import { Database, Search, ArrowLeft } from 'lucide-vue-next';
 
 const processedPeriodicTable = computed(() => {
   return PERIODIC_TABLE.mainGroup.map(row => 
@@ -13,21 +14,91 @@ const processedPeriodicTable = computed(() => {
   );
 });
 
-// Configuration des couleurs par groupe d'éléments
-const ELEMENT_COLORS = {
-  'alkali-metal': 'bg-green-100',         // Métaux alcalins (groupe 1)
-  'alkaline-earth': 'bg-blue-100',        // Métaux alcalino-terreux (groupe 2)
-  'transition-metal': 'bg-purple-100',     // Métaux de transition
-  'post-transition-metal': 'bg-yellow-100', // Métaux pauvres
-  'metalloid': 'bg-orange-100',           // Métalloïdes
-  'nonmetal': 'bg-red-100',               // Non-métaux
-  'halogen': 'bg-pink-100',               // Halogènes
-  'noble-gas': 'bg-gray-100',             // Gaz nobles
-  'lanthanide': 'bg-indigo-100',          // Lanthanides
-  'actinide': 'bg-teal-100'               // Actinides
+// Configuration des couleurs par groupe d'éléments avec majuscules
+const ELEMENT_GROUPS = {
+  'Li': 'alkali-metal',
+  'Na': 'alkali-metal',
+  'K': 'alkali-metal',
+  'Rb': 'alkali-metal',
+  'Cs': 'alkali-metal',
+  'Fr': 'alkali-metal',
+  'Be': 'alkaline-earth',
+  'Mg': 'alkaline-earth',
+  'Ca': 'alkaline-earth',
+  'Sr': 'alkaline-earth',
+  'Ba': 'alkaline-earth',
+  'Ra': 'alkaline-earth',
+  'He': 'noble-gas',
+  'Ne': 'noble-gas',
+  'Ar': 'noble-gas',
+  'Kr': 'noble-gas',
+  'Xe': 'noble-gas',
+  'Rn': 'noble-gas',
+  'Og': 'noble-gas',
+  'F': 'halogene',
+  'Cl': 'halogene',
+  'Br': 'halogene',
+  'I': 'halogene',
+  'C': 'chnopss',
+  'H': 'chnopss',
+  'N': 'chnopss',
+  'O': 'chnopss',
+  'P': 'chnopss',
+  'S': 'chnopss',
+  'Se': 'chnopss',
+  'B': 'metalloid',
+  'Si': 'metalloid',
+  'Ge': 'metalloid',
+  'Sb': 'metalloid',
+  'As': 'metalloid',
+  'Te': 'metalloid',
+  'At': 'metalloid',
+  'Zn': 'metal',
+  'Cd': 'metal',
+  'Hg': 'metal',
+  'Al': 'metal',
+  'Ga': 'metal',
+  'In': 'metal',
+  'Tl': 'metal',
+  'Sn': 'metal',
+  'Pb': 'metal',
+  'Bi': 'metal',
+  'Po': 'metal',
+  'Sc': 'metal-transition',
+  'Ti': 'metal-transition',
+  'V': 'metal-transition',
+  'Cr': 'metal-transition',
+  'Mn': 'metal-transition',
+  'Fe': 'metal-transition',
+  'Co': 'metal-transition',
+  'Ni': 'metal-transition',
+  'Cu': 'metal-transition',
+  'Y': 'metal-transition',
+  'Zr': 'metal-transition',
+  'Nb': 'metal-transition',
+  'Mo': 'metal-transition',
+  'Tc': 'metal-transition',
+  'Ru': 'metal-transition',
+  'Rh': 'metal-transition',
+  'Pd': 'metal-transition',
+  'Ag': 'metal-transition',
+  'Hf': 'metal-transition',
+  'Ta': 'metal-transition',
+  'W': 'metal-transition',
+  'Re': 'metal-transition',
+  'Os': 'metal-transition',
+  'Ir': 'metal-transition',
+  'Pt': 'metal-transition',
+  'Au': 'metal-transition',
+  'Rf': 'metal-transition',
+  'Db': 'metal-transition',
+  'Sg': 'metal-transition',
+  'Bh': 'metal-transition',
+  'Hs': 'metal-transition',
+  'Cn': 'metal-transition',
+  // Ajoutez d'autres éléments selon les besoins
 };
 
-// Structure du tableau périodique
 const PERIODIC_TABLE = {
   mainGroup: [
     ['H', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'He'],
@@ -35,23 +106,21 @@ const PERIODIC_TABLE = {
     ['Na', 'Mg', '', '', '', '', '', '', '', '', '', '', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar'],
     ['K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr'],
     ['Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe'],
-    ['Cs', 'Ba', '*', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn'],
-    ['Fr', 'Ra', '**', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og']
+    ['Cs', 'Ba', 'La', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn'],
+    ['Fr', 'Ra', 'Ac', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og']
   ],
   lanthanides: ['La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu'],
   actinides: ['Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr']
 };
 
-// États réactifs
 const selectedElements = ref([]);
 const searchResults = ref([]);
 const loading = ref(false);
 const error = ref('');
 const selectedMaterial = ref(null);
 
-// Méthodes
 const handleElementClick = (element) => {
-  if (!element || element === '*' || element === '**') return;
+  if (!element) return;
   
   const index = selectedElements.value.indexOf(element);
   if (index === -1) {
@@ -73,13 +142,11 @@ const handleSearch = async () => {
   selectedMaterial.value = null;
 
   try {
-    // Maintenant on passe directement le tableau des éléments sélectionnés
     const response = await materialsService.searchMaterials(selectedElements.value);
+    searchResults.value = response.data;
     
     if (response.data.length === 0) {
       error.value = 'Aucun matériau trouvé pour cette combinaison d\'éléments';
-    } else {
-      searchResults.value = response.data;
     }
   } catch (e) {
     console.error('Erreur de recherche:', e);
@@ -92,10 +159,12 @@ const handleSearch = async () => {
 const viewMaterialDetails = async (materialId) => {
   try {
     loading.value = true;
+    error.value = '';
     const material = await materialsService.getMaterialById(materialId);
     selectedMaterial.value = material;
   } catch (e) {
-    error.value = e.message;
+    console.error('Erreur de chargement du matériau:', e);
+    error.value = e.message || 'Erreur lors de la récupération du matériau';
   } finally {
     loading.value = false;
   }
@@ -106,22 +175,20 @@ const formatNumber = (value, precision = 2) => {
   return value.toFixed(precision);
 };
 
-const getElementGroup = (element) => {
-  // Classification simplifiée des éléments
-  const groups = {
-    'H': 'nonmetal',
-    'He': 'noble-gas',
-    'Li': 'alkali-metal',
-    'Be': 'alkaline-earth',
-    // ... ajoutez d'autres éléments selon les besoins
-  };
-  return groups[element] || 'transition-metal';
-};
-
 const getElementColor = (element) => {
-  if (!element || element === '*' || element === '**') return 'bg-gray-100';
-  const group = getElementGroup(element);
-  return ELEMENT_COLORS[group] || 'bg-gray-100';
+  const group = ELEMENT_GROUPS[element];
+  switch (group) {
+    case 'alkali-metal': return 'bg-red-300';
+    case 'alkaline-earth': return 'bg-red-100';
+    case 'chnopss': return 'bg-green-200';
+    case 'noble-gas': return 'bg-blue-200';
+    case 'halogene': return 'bg-yellow-300';
+    case 'metalloid': return 'bg-yellow-100';
+    case 'metal': return 'bg-gray-200';
+    case 'metal-transition': return 'bg-orange-200';
+    // ... autres couleurs selon les groupes
+    default: return 'bg-white';
+  }
 };
 </script>
 
@@ -130,7 +197,7 @@ const getElementColor = (element) => {
     <div class="bg-white rounded-lg shadow-md p-6">
       <!-- En-tête -->
       <div class="flex items-center gap-2 mb-6">
-        <i class="fas fa-database text-green-600"></i>
+        <Database class="w-6 h-6 text-green-600" />
         <h1 class="text-2xl font-bold">Materials Explorer</h1>
       </div>
 
@@ -156,8 +223,8 @@ const getElementColor = (element) => {
           :disabled="loading"
           class="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 flex items-center gap-2"
         >
-          <i class="fas fa-search"></i>
-          {{ loading ? 'Recherche...' : 'Rechercher' }}
+          <Search v-if="!loading" class="w-4 h-4" />
+          <span>{{ loading ? 'Recherche...' : 'Rechercher' }}</span>
         </button>
       </div>
 
@@ -167,7 +234,7 @@ const getElementColor = (element) => {
     <div class="grid gap-1">
       <div
         v-for="(row, rowIndex) in processedPeriodicTable"
-        :key="`main-${rowIndex}`"
+        :key="rowIndex"
         class="flex gap-1"
       >
         <template v-for="(cell, colIndex) in row" :key="`${rowIndex}-${colIndex}`">
@@ -187,36 +254,36 @@ const getElementColor = (element) => {
       </div>
     </div>
 
-        <!-- Lanthanides -->
-        <div class="mt-4 flex gap-1 ml-16">
-          <button
-            v-for="element in PERIODIC_TABLE.lanthanides"
-            :key="`lanthanide-${element}`"
-            @click="handleElementClick(element)"
-            :class="[
-              'w-8 h-8 text-xs font-medium rounded flex items-center justify-center transition-colors',
-              'bg-indigo-100',
-              selectedElements.includes(element) ? 'ring-2 ring-green-500' : ''
-            ]"
-          >
-            {{ element }}
-          </button>
-        </div>
-
-        <!-- Actinides -->
-        <div class="mt-1 flex gap-1 ml-16">
-          <button
-            v-for="element in PERIODIC_TABLE.actinides"
-            :key="`actinide-${element}`"
-            @click="handleElementClick(element)"
-            :class="[
-              'w-8 h-8 text-xs font-medium rounded flex items-center justify-center transition-colors',
-              'bg-teal-100',
-              selectedElements.includes(element) ? 'ring-2 ring-green-500' : ''
-            ]"
-          >
-            {{ element }}
-          </button>
+        <!-- Lanthanides et Actinides -->
+        <div class="mt-4">
+          <div class="ml-16 flex gap-1">
+            <button
+              v-for="element in PERIODIC_TABLE.lanthanides"
+              :key="element"
+              @click="handleElementClick(element)"
+              :class="[
+                'w-8 h-8 text-xs font-medium rounded flex items-center justify-center transition-colors',
+                'bg-purple-200',
+                selectedElements.includes(element) ? 'ring-2 ring-green-500' : ''
+              ]"
+            >
+              {{ element }}
+            </button>
+          </div>
+          <div class="mt-1 ml-16 flex gap-1">
+            <button
+              v-for="element in PERIODIC_TABLE.actinides"
+              :key="element"
+              @click="handleElementClick(element)"
+              :class="[
+                'w-8 h-8 text-xs font-medium rounded flex items-center justify-center transition-colors',
+                'bg-pink-200',
+                selectedElements.includes(element) ? 'ring-2 ring-green-500' : ''
+              ]"
+            >
+              {{ element }}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -228,9 +295,9 @@ const getElementColor = (element) => {
         {{ error }}
       </div>
 
-      <!-- Résultats de recherche -->
-      <div v-if="!selectedMaterial && searchResults.length > 0" class="space-y-4">
-        <h2 class="text-lg font-semibold">
+      <!-- Résultats -->
+      <div v-if="!selectedMaterial && searchResults.length > 0" class="mt-6">
+        <h2 class="text-lg font-semibold text-gray-700 mb-4">
           {{ searchResults.length }} résultats trouvés
         </h2>
         
@@ -239,7 +306,7 @@ const getElementColor = (element) => {
             v-for="material in searchResults"
             :key="material.material_id"
             @click="viewMaterialDetails(material.material_id)"
-            class="p-4 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+            class="p-4 border rounded-lg hover:bg-gray-50 cursor-pointer"
           >
             <h3 class="font-semibold text-lg">{{ material.formula_pretty }}</h3>
             <p class="text-sm text-gray-600">ID: {{ material.material_id }}</p>
@@ -250,41 +317,49 @@ const getElementColor = (element) => {
         </div>
       </div>
 
-      <!-- Détails du matériau -->
-      <div v-if="selectedMaterial" class="space-y-6">
+      <!-- Détails d'un matériau -->
+      <!-- Détails d'un matériau -->
+      <div v-if="selectedMaterial" class="mt-6">
         <button
           @click="selectedMaterial = null"
-          class="text-green-600 hover:text-green-700 flex items-center gap-2"
+          class="mb-4 text-green-600 hover:text-green-700 flex items-center gap-2"
         >
-          <i class="fas fa-arrow-left"></i>
+          <ArrowLeft class="w-4 h-4" />
           Retour aux résultats
         </button>
 
-        <div class="border-b pb-4">
-          <h2 class="text-2xl font-bold">{{ selectedMaterial.formula_pretty }}</h2>
-          <p class="text-gray-600">ID: {{ selectedMaterial.material_id }}</p>
-        </div>
-
-        <div class="grid gap-6 md:grid-cols-2">
-          <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Structure</h3>
-            <div class="space-y-2">
-              <p><span class="text-gray-600">Système cristallin:</span> {{ selectedMaterial.symmetry?.crystal_system || 'N/A' }}</p>
-              <p><span class="text-gray-600">Groupe d'espace:</span> {{ selectedMaterial.symmetry?.symbol || 'N/A' }}</p>
-              <p><span class="text-gray-600">Densité:</span> {{ formatNumber(selectedMaterial.density) }} g/cm³</p>
-            </div>
+        <div class="space-y-6">
+          <div class="border-b pb-4">
+            <h2 class="text-2xl font-bold">{{ selectedMaterial.formula_pretty }}</h2>
+            <p class="text-gray-600">ID: {{ selectedMaterial.material_id }}</p>
           </div>
 
-          <div class="space-y-4">
-            <h3 class="text-lg font-semibold">Composition</h3>
-            <div class="flex flex-wrap gap-2">
-              <span
-                v-for="element in selectedMaterial.elements"
-                :key="element"
-                class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-sm"
-              >
-                {{ element }}
-              </span>
+          <div class="grid gap-6 md:grid-cols-2">
+            <!-- Propriétés structurales -->
+            <div class="space-y-4">
+              <h3 class="text-lg font-semibold">Structure</h3>
+              <div class="space-y-2">
+                <p><span class="text-gray-600">Système cristallin:</span> {{ selectedMaterial.symmetry?.crystal_system || 'N/A' }}</p>
+                <p><span class="text-gray-600">Groupe d'espace:</span> {{ selectedMaterial.symmetry?.symbol || 'N/A' }}</p>
+                <p><span class="text-gray-600">Densité:</span> {{ formatNumber(selectedMaterial.density) }} g/cm³</p>
+              </div>
+            </div>
+
+            <!-- Composition -->
+            <div class="space-y-4">
+              <h3 class="text-lg font-semibold">Composition</h3>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="element in selectedMaterial.elements"
+                  :key="element"
+                  :class="[
+                    'px-2 py-1 rounded-full text-sm',
+                    getElementColor(element)
+                  ]"
+                >
+                  {{ element }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
