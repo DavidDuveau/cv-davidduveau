@@ -19,22 +19,30 @@ const routes: Array<RouteRecordRaw> = [
     path: '/materials',
     name: 'Materials',
     component: MaterialsExplorer
+  },
+  // Route catch-all qui redirige vers Home
+  { 
+    path: '/:pathMatch(.*)*',
+    redirect: { name: 'Home' }
   }
 ]
 
+const BASE_URL = '/cv-davidduveau/'
+
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL || '/cv-davidduveau/'),
+  history: createWebHistory(BASE_URL),
   routes
 })
 
-// Navigation guard pour gérer les redirections
+// Garde de navigation pour conserver l'URL
 router.beforeEach((to, from, next) => {
-  // Si la route n'existe pas, rediriger vers la home
-  if (!to.matched.length) {
-    next({ name: 'Home' })
-  } else {
-    next()
+  // Si l'URL ne commence pas par la base URL, ajoutez-la
+  if (!to.fullPath.startsWith(BASE_URL)) {
+    const newPath = BASE_URL + to.fullPath.substring(1)
+    next(newPath)
+    return
   }
+  next()
 })
 
 export default router

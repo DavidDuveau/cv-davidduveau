@@ -34,7 +34,7 @@ const handleLogin = () => {
             class="text-gray-600 hover:text-green-600 flex items-center space-x-2"
           >
             <Database class="w-5 h-5" />
-            <span>Materials Explorer</span>
+            <span>Materials</span>
           </RouterLink>
         </div>
         
