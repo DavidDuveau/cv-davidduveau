@@ -4,6 +4,8 @@ import Login from '@/components/Login.vue'
 import Home from '@/views/Home.vue'
 import MaterialsExplorer from '@/components/MaterialsExplorer.vue'
 
+const isGitHubPages = window.location.hostname.includes('github.io')
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -13,36 +15,32 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      if (isGitHubPages) {
+        next('/') // Redirection vers le CV sur GitHub Pages
+      } else {
+        next() // Continue normalement en développement
+      }
+    }
   },
   {
     path: '/materials',
     name: 'Materials',
-    component: MaterialsExplorer
-  },
-  // Route catch-all qui redirige vers Home
-  { 
-    path: '/:pathMatch(.*)*',
-    redirect: { name: 'Home' }
+    component: MaterialsExplorer,
+    beforeEnter: (to, from, next) => {
+      if (isGitHubPages) {
+        next('/') // Redirection vers le CV sur GitHub Pages
+      } else {
+        next() // Continue normalement en développement
+      }
+    }
   }
 ]
 
-const BASE_URL = '/cv-davidduveau/'
-
 const router = createRouter({
-  history: createWebHistory(BASE_URL),
+  history: createWebHistory(),
   routes
-})
-
-// Garde de navigation pour conserver l'URL
-router.beforeEach((to, from, next) => {
-  // Si l'URL ne commence pas par la base URL, ajoutez-la
-  if (!to.fullPath.startsWith(BASE_URL)) {
-    const newPath = BASE_URL + to.fullPath.substring(1)
-    next(newPath)
-    return
-  }
-  next()
 })
 
 export default router

@@ -7,6 +7,7 @@ const authStore = useAuthStore()
 const router = useRouter()
 
 const isAuthenticated = computed(() => authStore.isAuthenticated)
+const isGitHubPages = computed(() => window.location.hostname.includes('github.io'))
 
 const handleLogout = () => {
   authStore.logout()
@@ -23,22 +24,20 @@ const handleLogin = () => {
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between h-16">
         <div class="flex items-center space-x-8">
-          <RouterLink 
-            :to="{ name: 'Home' }" 
-            class="text-xl font-bold text-green-600 hover:text-green-700"
-          >
+          <router-link to="/" class="text-xl font-bold text-green-600">
             CV David Duveau
-          </RouterLink>
-          <RouterLink 
-            :to="{ name: 'Materials' }" 
+          </router-link>
+          <router-link 
+            v-if="!isGitHubPages"
+            to="/materials" 
             class="text-gray-600 hover:text-green-600 flex items-center space-x-2"
           >
-            <Database class="w-5 h-5" />
+            <i class="fas fa-database"></i>
             <span>Materials</span>
-          </RouterLink>
+          </router-link>
         </div>
         
-        <div class="flex items-center">
+        <div v-if="!isGitHubPages" class="flex items-center">
           <template v-if="isAuthenticated">
             <button
               @click="handleLogout"
