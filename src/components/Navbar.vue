@@ -2,6 +2,7 @@
 import { useAuthStore } from '../stores/authStore'
 import { useRouter } from 'vue-router'
 import { computed } from 'vue'
+import { BrickWall, Notebook } from 'lucide-vue-next';
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -24,15 +25,16 @@ const handleLogin = () => {
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between h-16">
         <div class="flex items-center space-x-8">
-          <router-link to="/" class="text-xl font-bold text-green-600">
-            CV David Duveau
+          <router-link to="/" class="text-green-600 hover:text-green-600 flex items-center space-x-2">
+            <Notebook class="w-6 h-6 text-green-600" />
+            <span>CV Duveau</span>
           </router-link>
           <router-link 
             v-if="!isGitHubPages"
             to="/materials" 
             class="text-gray-600 hover:text-green-600 flex items-center space-x-2"
           >
-            <i class="fas fa-database"></i>
+            <BrickWall class="w-6 h-6 text-green-600" />
             <span>Materials</span>
           </router-link>
         </div>
